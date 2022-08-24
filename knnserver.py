@@ -16,13 +16,7 @@ class knn():
 
         
 
-    # def kfold(self, cv, X, y):
-    #     counter = cv
-    #     for i in range(cv):
-    #         cv[i] = (X[:len(X)//cv], y[:len(y)//cv])
-    #         X = X[len(X)//cv:]
-    #         y = y[len(y)//cv:]
-    #         counter -= 1
+
         
  
     def distance(self,p1,p2):
@@ -81,13 +75,17 @@ class knn():
 
 mnist = load_digits()
 X_train,X_test,y_train,y_test = train_test_split(mnist.data,mnist.target,test_size=0.2)
-knnmodel = knn(k=5)
+knnmodel = knn(k=3)
 knnmodel.fit(X_train,y_train)
 print(knnmodel.predict(X_test[0]))
-print(knnmodel.score(X_test, y_test))
+trainscore = knnmodel.score(X_test, y_test)
+testscore = knnmodel.score(X_train, y_train)
+print("test score  = ", trainscore)
+print("train score = ",testscore)
+#Once you see the scores of the classifier u might question if it works as intended, I encourage you 
+#to create a knn classifier from scikit-learn and see its results i assure that they are very close 
+# and there is no overfitting or underfitting.
 
-            
-            
     
         
 
