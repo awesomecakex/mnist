@@ -3,6 +3,7 @@ import re
 from sklearn.datasets import load_digits
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
+from sklearn.model_selection import KFold
 
 class knn():
     def __init__(self, k=3):
@@ -14,11 +15,44 @@ class knn():
         self.X_train = data
         self.y_train = target
 
-        
+    def kfold(self,X,y,cv=5):
+        kf = KFold(n_splits=cv)
 
 
+
+
+        # cvarray = []
+        # counter = cv
+        # num = cv
         
- 
+        # for i in range(num):
+        #     cv1 = (X[:len(X)//counter],y[:len(y)//counter])
+        #     cvarray.append(cv1)
+        #     X = X[len(X)//counter:]
+        #     y = y[len(y)//counter:]
+        #     counter-=1
+
+
+        # trainX = []
+        # trainy = []
+        # cvscore = 0
+        # for i in range(num):
+
+        #     for j in range(num):
+
+        #         if i!=j:
+        #             trainX.append(cvarray[j][0])
+        #             trainy.append(cvarray[j][1])
+
+
+        #     self.fit(trainX,trainy)
+        #     cvscore += self.score(cvarray[i][0],cvarray[i][1])
+
+
+        # cvscore = cvscore/num
+        # return cvscore
+    
+
     def distance(self,p1,p2):
         dis = 0.0
         for i in range(len(p1)):
@@ -74,17 +108,29 @@ class knn():
 
 
 mnist = load_digits()
+X = mnist.data
+y = mnist.target
 X_train,X_test,y_train,y_test = train_test_split(mnist.data,mnist.target,test_size=0.2)
 knnmodel = knn(k=3)
 knnmodel.fit(X_train,y_train)
-print(knnmodel.predict(X_test[0]))
-trainscore = knnmodel.score(X_test, y_test)
-testscore = knnmodel.score(X_train, y_train)
-print("test score  = ", trainscore)
-print("train score = ",testscore)
+print(knnmodel.kfold(X_train,y_train))
+# print("my model ",knnmodel.predict(X_test[20]))
+# trainscore = knnmodel.score(X_test, y_test)
+# testscore = knnmodel.score(X_train, y_train)
+# print("test score  = ", trainscore)
+# print("train score = ",testscore)
+#-------------------------------------
 #Once you see the scores of the classifier u might question if it works as intended, I encourage you 
 #to create a knn classifier from scikit-learn and see its results i assure that they are very close 
 # and there is no overfitting or underfitting.
+#-------------------------------------
+# from sklearn.neighbors import KNeighborsClassifier
+
+# knnmod = KNeighborsClassifier(n_neighbors=3)
+# knnmod.fit(X_train,y_train)
+
+# print("sklearn model", knnmod.predict(X_test[20].reshape(1,-1)))
+
 
     
         
