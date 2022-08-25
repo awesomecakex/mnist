@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import KFold
 
-class knn():
+class knn:
     def __init__(self, k=3):
         self.k = k
         self.counter = 0
@@ -17,6 +17,19 @@ class knn():
 
     def kfold(self,X,y,cv=5):
         kf = KFold(n_splits=cv)
+        kf.get_n_splits(X)  
+        count = 0
+        cvnum = 1
+        cvarr = []
+        for train_index, test_index in kf.split(X):
+            self.fit(X[train_index],y[train_index])
+            count += self.score(X[test_index],y[test_index])
+            cvarr.append(f"score for validation portion {cvnum} : {self.score(X[test_index],y[test_index])}")
+            cvnum+=1
+        for i in range(len(cvarr)):
+            print(cvarr[i])
+        return count/cv
+         
 
 
 
@@ -100,7 +113,7 @@ class knn():
             print(self.counter)
             self.counter +=1
         
-        return f"{(county/len(X))*100}%"
+        return (county/len(X))*100
 
 
 
@@ -113,7 +126,8 @@ y = mnist.target
 X_train,X_test,y_train,y_test = train_test_split(mnist.data,mnist.target,test_size=0.2)
 knnmodel = knn(k=3)
 knnmodel.fit(X_train,y_train)
-print(knnmodel.kfold(X_train,y_train))
+avgcv = knnmodel.kfold(X_train,y_train)
+print("the average cv score is ",avgcv)
 # print("my model ",knnmodel.predict(X_test[20]))
 # trainscore = knnmodel.score(X_test, y_test)
 # testscore = knnmodel.score(X_train, y_train)
