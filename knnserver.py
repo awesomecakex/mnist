@@ -26,7 +26,7 @@ class Knn:
         count = 0
         cvnum = 1
         cvarr = []
-        for train_index, test_index in kf.split(X):
+        for train_index, test_index in kf.split(self.X):
             self.fit(self.X[train_index], self.y[train_index])
             count += self.score(self.X[test_index], self.y[test_index])
             cvarr.append(f"score for validation portion {cvnum} : {self.score(self.X[test_index], self.y[test_index])}")
