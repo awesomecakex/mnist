@@ -11,7 +11,7 @@ y = mnist.target
 url_to_upload = "http://127.0.0.1:5000/upload"
 
 # Getting the number from the user
-choice = int(input("Enter number between 0-1947: "))
+choice = int(input("Enter number between 0-1797: "))
 picture = mnist.images[choice]
 print("You chose the following number")
 plt.imshow(picture, cmap='gray')
