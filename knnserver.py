@@ -89,3 +89,5 @@ class Knn:
 
 # knnmod = KNeighborsClassifier(n_neighbors=3)
 # knnmod.fit(X_train,y_train)
+
+# print("sklearn model", knnmod.predict(X_test[20].reshape(1,-1)))
